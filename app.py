@@ -5,17 +5,20 @@ from google.cloud import texttospeech
 import requests
 import os
 import re
+import json
 
-# Set up environment variables for Google Cloud credentials and Azure OpenAI API key
-GOOGLE_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")  # Google Cloud credentials (as a JSON string)
-AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY")  # Azure OpenAI API key
+# Load Google Cloud credentials from Streamlit secrets
+google_credentials = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
 
-# Save the Google credentials to a temporary file
-with open("credentials_temp.json", "w") as f:
-    f.write(GOOGLE_CREDENTIALS)
+# Write the Google Cloud credentials to a file (if needed)
+with open("google_credentials.json", "w") as f:
+    f.write(json.dumps(google_credentials))
 
-# Set the environment variable for Google Cloud to use the temporary file
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "credentials_temp.json"
+# Set the environment variable for Google Cloud authentication
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_credentials.json"
+
+# Access Azure OpenAI API key from Streamlit secrets
+azure_api_key = st.secrets["AZURE_OPENAI"]["api_key"]
 
 AZURE_OPENAI_ENDPOINT = "https://internshala.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview"
 
