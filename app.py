@@ -72,6 +72,7 @@ if uploaded_file is not None:
             st.success("The video is within the allowed duration limit.")
             if st.button("Proceed"):
                 proceed = True
+                trim_option = "Not Needed"
     except Exception as e:
         st.error(f"Error loading video: {e}")
 
