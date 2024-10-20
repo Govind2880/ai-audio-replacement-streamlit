@@ -6,19 +6,20 @@ import requests
 import os
 import re
 import json
+from collections import defaultdict
 
 # Load Google Cloud credentials from Streamlit secrets
 google_credentials = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
 
-# Write the Google Cloud credentials to a file (if needed)
+# Convert the AttrDict to a regular dictionary
+google_credentials_dict = dict(google_credentials)
+
+# Write the Google Cloud credentials to a file
 with open("google_credentials.json", "w") as f:
-    f.write(json.dumps(google_credentials))
+    f.write(json.dumps(google_credentials_dict))
 
 # Set the environment variable for Google Cloud authentication
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_credentials.json"
-
-# Access Azure OpenAI API key from Streamlit secrets
-azure_api_key = st.secrets["AZURE_OPENAI"]["api_key"]
 
 AZURE_OPENAI_ENDPOINT = "https://internshala.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview"
 
