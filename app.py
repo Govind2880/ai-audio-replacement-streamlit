@@ -6,11 +6,17 @@ import requests
 import os
 import re
 
-# Set up Google Cloud credentials
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "credentials.json"
+# Set up environment variables for Google Cloud credentials and Azure OpenAI API key
+GOOGLE_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")  # Google Cloud credentials (as a JSON string)
+AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY")  # Azure OpenAI API key
 
-# Azure OpenAI API details
-AZURE_OPENAI_KEY = "22ec84421ec24230a3638d1b51e3a7dc"
+# Save the Google credentials to a temporary file
+with open("credentials_temp.json", "w") as f:
+    f.write(GOOGLE_CREDENTIALS)
+
+# Set the environment variable for Google Cloud to use the temporary file
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "credentials_temp.json"
+
 AZURE_OPENAI_ENDPOINT = "https://internshala.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview"
 
 # Set a limit for the maximum audio length (in seconds)
