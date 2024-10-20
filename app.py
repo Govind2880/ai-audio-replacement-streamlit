@@ -21,6 +21,8 @@ with open("google_credentials.json", "w") as f:
 # Set the environment variable for Google Cloud authentication
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_credentials.json"
 
+AZURE_OPENAI_KEY = st.secrets["AZURE_OPENAI_KEY"] 
+
 AZURE_OPENAI_ENDPOINT = "https://internshala.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-08-01-preview"
 
 # Set a limit for the maximum audio length (in seconds)
